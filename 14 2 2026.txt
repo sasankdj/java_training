@@ -1,0 +1,2 @@
+//create a java application where we have 1 class it contains 1 instance variable and a non static method m1 having integer as params and return nothing and a static method m2 having bool and float as params and return nothing then invoke these methods under main method 
+//create a java application where we have 1 class it contains 1 instance variable and a static method m1 having string as params and returns int and a non static method m2 having bool as params and return nothing then invoke this method under main method
