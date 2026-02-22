@@ -2,7 +2,10 @@
 import java.util.Scanner;
 class feb20_1{
     static Scanner sc = new Scanner(System.in);
-    int i =200;
+    int i =sc.nextInt();
+    static{
+        System.out.println("enter a int for i ");
+    }
     static feb20_1 obj = new feb20_1();
     int m1(int a ){
         System.out.println(a);
