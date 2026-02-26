@@ -1,0 +1,222 @@
+Got it ✅
+You want **exam-style Java problem statements** like your example
+(focused on static, non-static, params, return types, object passing, dynamic input).
+
+Here are **practice questions from basic → OOP**, in the same pattern.
+
+---
+
+# 🟢 LEVEL 1 – Basic Methods (static / non-static)
+
+1️⃣
+Create a Java application where we have **1 class** it contains:
+
+* 1 non-static method having **int parameter and int return type**
+* 1 static method having **no parameters and no return type**
+  Invoke the non-static method inside static method and static method inside main method using **dynamic inputs**.
+
+---
+
+2️⃣
+Create a Java application where we have **1 class** it contains:
+
+* 1 static method having **two int parameters and int return type**
+* 1 non-static method having **no parameters and no return type**
+  Invoke static method inside non-static method and print the result.
+  Call non-static method inside main using object.
+
+---
+
+3️⃣
+Create a Java application where we have **1 class** it contains:
+
+* 1 non-static method having **float parameter and boolean return type**
+  Return true if float > 50.
+* 1 static method having **object as parameter and no return type**
+  Invoke non-static method inside static method.
+  Call static method inside main by creating object dynamically.
+
+---
+
+# 🟡 LEVEL 2 – Object as Parameter
+
+4️⃣
+Create a Java application where we have **1 class** it contains:
+
+* 1 non-static method having **int parameter and int return type**
+* 1 static method having **object as parameter and int return type**
+  Inside static method invoke non-static method using object and return the value.
+  Print result inside main.
+
+---
+
+5️⃣
+Create a Java application where we have **1 class** it contains:
+
+* 2 non-static methods
+
+  * m1 having **int parameter and int return type**
+  * m2 having **object as parameter and no return type**
+    Invoke m1 inside m2 and m2 inside main.
+
+---
+
+# 🟠 LEVEL 3 – Multiple Methods + Calculations
+
+6️⃣
+Create a Java application where we have **1 class** it contains:
+
+* 1 static method having **int parameter and int return type** (square)
+* 1 non-static method having **int parameter and int return type** (cube)
+  Call static method inside non-static method.
+  Call non-static method inside main using dynamic input.
+
+---
+
+7️⃣
+Create a Java application where we have **1 class** it contains:
+
+* 1 non-static method having **two int parameters and int return type** (largest)
+* 1 static method having **object as parameter and no return type**
+  Invoke non-static method inside static method and print largest value.
+
+---
+
+# 🔵 LEVEL 4 – Instance + Static Variables
+
+8️⃣
+Create a Java application where we have **1 class** it contains:
+
+* 1 static variable
+* 1 non-static variable
+* 1 non-static method having **no parameters and no return type**
+  Print both variables.
+  Invoke method inside main using **two different objects with dynamic inputs**.
+
+---
+
+9️⃣
+Create a Java application where we have **1 class** it contains:
+
+* 1 static variable
+* 1 static method
+* 1 non-static method
+  Access static members inside non-static method and non-static members inside static method using object.
+
+---
+
+# 🟣 LEVEL 5 – Constructors + Methods
+
+🔟
+Create a Java application where we have **1 class** it contains:
+
+* parameterized constructor (int, String)
+* 1 non-static method having **no parameters and no return type**
+  Print constructor values inside method.
+  Create object dynamically inside main.
+
+---
+
+1️⃣1️⃣
+Create a Java application where we have **1 class** it contains:
+
+* default constructor
+* parameterized constructor
+* 1 static method having **object as parameter and no return type**
+  Print object values inside static method.
+
+---
+
+# 🔴 LEVEL 6 – Inheritance Style Questions
+
+1️⃣2️⃣
+Create a Java application with:
+Class A → contains 1 non-static method (int → int)
+Class B → extends A and contains static method (object of A as parameter)
+Invoke parent method inside child static method.
+Call child static method inside main.
+
+---
+
+1️⃣3️⃣
+Create a Java application with:
+Class Person → non-static method (String parameter, no return)
+Class Student → extends Person and has static method (object parameter)
+Invoke parent method inside static method using object.
+
+---
+
+# ⚫ LEVEL 7 – Polymorphism Pattern
+
+1️⃣4️⃣
+Create a Java application where we have **1 class** it contains:
+
+* overloaded methods m1
+
+  * m1(int)
+  * m1(float)
+  * m1(int, int)
+    Call all methods using dynamic inputs inside main.
+
+---
+
+1️⃣5️⃣
+Create a Java application where we have:
+Class A → method m1()
+Class B → extends A and overrides m1()
+Create object of B and call using reference of A.
+
+---
+
+# 🧠 LEVEL 8 – Mixed Concept (Very Important for Exams)
+
+1️⃣6️⃣
+Create a Java application where we have **1 class** it contains:
+
+* 1 static method having **object as parameter and int return type**
+* 1 non-static method having **int parameter and int return type**
+  Invoke non-static inside static and static inside main with dynamic inputs.
+
+---
+
+1️⃣7️⃣
+Create a Java application where we have **1 class** it contains:
+
+* 1 static variable
+* 1 non-static variable
+* 1 static method
+* 1 non-static method
+  Perform addition of both variables and print using both methods.
+
+---
+
+1️⃣8️⃣
+Create a Java application where we have **1 class** it contains:
+
+* 1 non-static method having **int parameter and boolean return type**
+  Check palindrome number.
+* 1 static method having **object as parameter and no return type**
+  Invoke non-static inside static and print result.
+
+---
+
+# 🏆 If you solve these you will master:
+
+✔ static vs non-static
+✔ object passing
+✔ method invocation flow
+✔ constructor usage
+✔ inheritance invocation
+✔ polymorphism basics
+
+---
+
+## Next Step
+
+If you want, I’ll:
+✅ Give **solutions step by step**
+✅ Give **dry run flow diagrams** (very useful for exams)
+✅ Give **compiler trap questions** (very important for internals)
+
+Say:
+👉 **“Give me answers for 1–5”** and we’ll start solving.
