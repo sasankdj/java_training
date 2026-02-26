@@ -1,3 +1,4 @@
+//create a java application where we have one class it contains two static and two instance variables,3 non static methods and 3 static methods having parameter and return type then invok non static methods under static methods one each and print all the variables under all the static methods, invok static methods under main method by providing dynamic inputs.
 import java.util.Scanner;
 
 public class feb25_3 {
