@@ -4,25 +4,25 @@ import java.util.Scanner;
 
 public class mar2_4_1 {
     static Scanner sc= new Scanner(System.in);
-    int a;
+    int a=sc.nextInt();
     mar2_4_1(){
         System.out.println("in default construct");
     }
     mar2_4_1(int a){
+        System.out.println("in single construct"+a);
         new mar2_4_1();
-        System.out.println("in single construct");
     }
     mar2_4_1(int a, int b){
-        new mar2_2(a);
-        System.out.println("in double construct");
+        System.out.println("in double construct"+a+" "+b);
+        new mar2_2(sc.nextInt());
 
     }
     mar2_4_1(int a, int b , int c){
-       new mar2_4_1(a, b);
-        System.out.println("in triple construct");
+        System.out.println("in triple construct"+a+" "+b+" "+c);
+       new mar2_4_1(sc.nextInt(), sc.nextInt());
 
     }
     public static void main(String[] args) {
-        new mar2_4(sc.nextInt(),sc.nextInt(),sc.nextInt());
+     System.out.println(new mar2_4_1(sc.nextInt(),sc.nextInt(),sc.nextInt()).a);   
     }
 }
