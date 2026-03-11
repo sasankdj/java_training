@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class mar10_4 {
     static Scanner sc = new Scanner(System.in);
     int a = sc.nextInt();
-
+    // static int a=10;
     mar10_4(int a) {
         System.out.println("local var in construct" + a);
 
