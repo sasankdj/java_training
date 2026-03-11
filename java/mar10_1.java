@@ -1,3 +1,4 @@
+//Cja where we need to satisfy this keyword at variable and method level.
 import java.util.Scanner;
 
 class mar10_1{

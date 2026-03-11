@@ -1,3 +1,4 @@
+//CJA where we have one class that contains one instance variable, two parameterised constructors, then invoke these properties with respect to single memory space.
 import java.util.Scanner;
 
 public class mar10_2 {
