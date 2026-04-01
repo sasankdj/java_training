@@ -1,3 +1,4 @@
+//Cja where we need to statisfy  both overloading and overriding
 import java.util.Scanner;
 
 class A{
@@ -10,6 +11,7 @@ class A{
         System.out.println(a+" "+b);
         return a+b;
     }
+   
 
 }
 class mar28_1 extends A{
