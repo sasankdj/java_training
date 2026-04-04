@@ -1,5 +1,4 @@
 //Cja where we have 1 interface which contains 2 abstract methods having params ans ret type inherit this interface into a concrete class provide functionality for abstract methods invoke them under main method by providing dynamic inps
-
 import java.util.Scanner;
 
 interface i1{
