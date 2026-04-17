@@ -1,3 +1,4 @@
+//cja where we need to handle null pointer exception
 public class apr16_3 {
     public static void main(String[] args) {
         String s=null;

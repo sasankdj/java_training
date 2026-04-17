@@ -1,5 +1,4 @@
-//cja where we need to handle string index out of bound exception
-//cja where we need to handle null pointer exception
+//Cja where we have 1 class it contains a method having 2 int params then perform division operation on this params if any exception occurs in this process handle it and ivoke this method under main method by providing dynamic inps
 import java.util.Scanner;
 
 public class apr16_1{
