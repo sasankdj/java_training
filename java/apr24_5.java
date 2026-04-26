@@ -1,35 +1,33 @@
+class A   {
+    static void m1(){
+        for (int i = 0; i <20; i++) {
+            Thread t= Thread.currentThread();
+            if (t.getName().equals("hi")) {
+                if (i%2==0) {
+                    System.out.println(i);
+                }
+            } else if (t.getName().equals("hello")) {
+                if (i%3==0) {
+                    System.out.println(i);
+                }
+            }
 
-//cja where we have 1 class it contains a method which iterates the numbers from 1 to 20 then access this method from 2 different threads, print all 2 multiples by using 1st thread and 3 multiples using 2nd thread
-class count extends Thread{
-   static int i=1;
-static void numbers(){
-        for (i=1; i <=20; i++) {
-            
         }
     }
+    
 }
-class odd extends count{
+public class apr24_5 extends Thread{
     public void run(){
-
-        if(i%2==0){
-            System.out.println(i);
-        }
+        A.m1();
     }
+    public static void main(String[] args) {
+        apr24_5 t1= new apr24_5();
+        apr24_5 t2= new apr24_5();
+        t1.setName("hi");
+        t2.setName("hello");
+        t1.start();
+        t2.start();
 
-}
-public class apr24_5 extends count{
-    
-     public void run(){
 
-        if(i%2==0){
-            System.out.println(i);
-        }
     }
-public static void main(String[] args) {
-    count t1= new count();
-    t1.start();
-    apr24_5 t2 = new apr24_5();
-    t2.start();
-}
-    
 }
