@@ -1,7 +1,8 @@
 package p1;
+
 import java.util.*;
 
-import p1.project;
+import p1.hand;
 
 class User {
     String username;
@@ -16,6 +17,7 @@ class User {
         attempted = false;
     }
 }
+
 class Question {
     String question;
     String options;
@@ -33,6 +35,7 @@ class Attempt {
     boolean visited = false;
     boolean marked = false;
 }
+
 public class QuizSystem {
 
     static Scanner sc = new Scanner(System.in);
@@ -73,7 +76,7 @@ public class QuizSystem {
 
     // ---------------- OTP ----------------
     static boolean otp() {
-        int otp = 1000 + (int)(Math.random() * 9000);
+        int otp = 1000 + (int) (Math.random() * 9000);
         System.out.println("OTP: " + otp);
 
         System.out.print("Enter OTP: ");
@@ -81,139 +84,179 @@ public class QuizSystem {
 
         return otp == uotp;
     }
-static int askWithTimer(String question, String options, String correct) {
 
-    try {
-        System.out.println("\n" + question);
+    static int askWithTimer(String question, String options, String correct) {
 
-        if (!options.equals(""))
-            System.out.println(options);
+        try {
+            System.out.println("\n" + question);
 
-        System.out.println(" You have 5 seconds (answer quickly!)");
+            if (!options.equals(""))
+                System.out.println(options);
 
-        long start = System.currentTimeMillis();
+            System.out.println(" You have 5 seconds (answer quickly!)");
 
-        String ans = sc.next();   // user can type immediately
+            long start = System.currentTimeMillis();
 
-        long end = System.currentTimeMillis();
+            String ans = sc.next(); // user can type immediately
 
-        long timeTaken = (end - start) / 1000;
+            long end = System.currentTimeMillis();
 
-        if (timeTaken > 5) {
-            System.out.println(" Time's up!");
-            return 0;
+            long timeTaken = (end - start) / 1000;
+
+            if (timeTaken > 5) {
+                System.out.println(" Time's up!");
+                return 0;
+            }
+
+            if (ans.equalsIgnoreCase(correct)) {
+                return 1;
+            }
+
+        } catch (Exception e) {
         }
 
-        if (ans.equalsIgnoreCase(correct)) {
-            return 1;
-        }
+        return 0;
+    }
 
-    } catch (Exception e) {}
-
-    return 0;
-}
     // ---------------- QUIZ ----------------
-static void startQuiz() {
+    static void startQuiz() {
 
-    if (currentUser.attempted) {
-        System.out.println("You already attempted!\n");
-        return;
-    }
-
-    if (!otp()) {
-        System.out.println("Wrong OTP!\n");
-        return;
-    }
-
-    ArrayList<Question> questions = new ArrayList<>();
-
-    System.out.println("\nChoose Category:");
-    System.out.println("1. Java 2. C 3. Aptitude");
-    int ch = sc.nextInt();
-
-    // -------- JAVA --------
-    if (ch == 1) {
-        questions.add(new Question("What is Java?", "A.Language B.OS C.Browser D.Hardware", "A"));
-        questions.add(new Question("Size of int?", "A.2 B.4 C.8 D.16", "B"));
-        questions.add(new Question("OOP stands for?", "A.Object Oriented Programming B.Other", "A"));
-    }
-
-    // -------- C --------
-    else if (ch == 2) {
-        questions.add(new Question("Who developed C?", "A.Dennis B.Gosling", "A"));
-        questions.add(new Question("C is?", "A.Low B.Middle C.High", "B"));
-        questions.add(new Question("Extension of C?", "A..java B..c C..py", "B"));
-    }
-
-    // -------- APTITUDE --------
-    else if (ch == 3) {
-        questions.add(new Question("2+2=?", "", "4"));
-        questions.add(new Question("5*3=?", "", "15"));
-        questions.add(new Question("10/2=?", "", "5"));
-    }
-
-   
-    Collections.shuffle(questions);
-
-    int n = questions.size();
-
-    // Attempt tracking
-    ArrayList<Attempt> attempts = new ArrayList<>();
-    for (int i = 0; i < n; i++) attempts.add(new Attempt());
-
-    int current = 0;
-
-    while (true) {
-        Question q = questions.get(current);
-        Attempt a = attempts.get(current);
-
-        a.visited = true;
-
-        System.out.println("\nQ" + (current + 1) + ": " + q.question);
-        if (!q.options.equals("")) System.out.println(q.options);
-
-        System.out.print("Answer (or 0 skip): ");
-        String ans = sc.next();
-
-        if (!ans.equals("0")) {
-            a.answer = ans;
-            a.marked = false;
+        if (currentUser.attempted) {
+            System.out.println("You already attempted!\n");
+            return;
         }
 
-        System.out.println("\n1.Next 2.Previous 3.Jump 4.Mark 5.Palette 6.Submit");
-        int choice = sc.nextInt();
-
-        if (choice == 1) current++;
-        else if (choice == 2) current--;
-        else if (choice == 3) {
-            System.out.print("Enter question number: ");
-            current = sc.nextInt() - 1;
+        if (!otp()) {
+            System.out.println("Wrong OTP!\n");
+            return;
         }
-        else if (choice == 4) a.marked = true;
-        else if (choice == 5) showPalette(attempts);
-        else if (choice == 6) break;
 
-        if (current < 0) current = 0;
-        if (current >= n) current = n - 1;
+        ArrayList<Question> questions = new ArrayList<>();
+
+        System.out.println("\nChoose Category:");
+        System.out.println("1. Java 2. C 3. Aptitude");
+        int ch = sc.nextInt();
+
+        // -------- JAVA --------
+        if (ch == 1) {
+            questions.add(new Question("What is Java?", "A.Language B.OS C.Browser D.Hardware", "A"));
+            questions.add(new Question("Size of int?", "A.2 B.4 C.8 D.16", "B"));
+            questions.add(new Question("OOP stands for?", "A.Object Oriented Programming B.Other", "A"));
+        }
+
+        // -------- C --------
+        else if (ch == 2) {
+            questions.add(new Question("Who developed C?", "A.Dennis B.Gosling", "A"));
+            questions.add(new Question("C is?", "A.Low B.Middle C.High", "B"));
+            questions.add(new Question("Extension of C?", "A..java B..c C..py", "B"));
+        }
+
+        // -------- APTITUDE --------
+        else if (ch == 3) {
+            questions.add(new Question("2+2=?", "", "4"));
+            questions.add(new Question("5*3=?", "", "15"));
+            questions.add(new Question("10/2=?", "", "5"));
+        }
+
+        Collections.shuffle(questions);
+
+        int n = questions.size();
+
+        // Attempt tracking
+        ArrayList<Attempt> attempts = new ArrayList<>();
+        for (int i = 0; i < n; i++)
+            attempts.add(new Attempt());
+
+        int current = 0;
+
+        while (true) {
+            Question q = questions.get(current);
+            Attempt a = attempts.get(current);
+
+            a.visited = true;
+
+            System.out.println("\nQ" + (current + 1) + ": " + q.question);
+            if (!q.options.equals(""))
+                System.out.println(q.options);
+
+            System.out.print("Answer (or 0 skip): ");
+            String ans = sc.next();
+
+            if (!ans.equals("0")) {
+                a.answer = ans;
+                a.marked = false;
+            }
+
+            System.out.println("\n1.Next 2.Previous 3.Jump 4.Mark 5.Palette 6.Submit");
+            int choice = sc.nextInt();
+
+            if (choice == 1) {
+    if (current < n - 1) {
+        current++;
+    } else {
+        System.out.println("Last question reached. Submitting quiz...");
+        break;
     }
-
-    evaluate(questions, attempts);
-    currentUser.attempted = true;
 }
 
-static void showPalette(ArrayList<Attempt> attempts) {
-    System.out.println("\n--- Question Palette ---");
+            else if (choice == 2) {
+                if (current > 0) {
+                    current--;
+                } else {
+                    System.out.println("This is the first question!");
+                }
+            }
 
-    for (int i = 0; i < attempts.size(); i++) {
-        Attempt a = attempts.get(i);
+            else if (choice == 3) {
+                System.out.print("Enter question number: ");
+                int jump = sc.nextInt();
 
-        if (!a.visited) System.out.print("Q" + (i+1) + "[NA] ");
-        else if (a.marked) System.out.print("Q" + (i+1) + "[M] ");
-        else if (a.answer.equals("")) System.out.print("Q" + (i+1) + "[N] ");
-        else System.out.print("Q" + (i+1) + "[A] ");
+                if (jump >= 1 && jump <= n) {
+                    current = jump - 1;
+                } else {
+                    System.out.println("Invalid Question Number!");
+                }
+            }
+
+            else if (choice == 4) {
+                a.marked = true;
+            }
+
+            else if (choice == 5) {
+                showPalette(attempts);
+            }
+
+            else if (choice == 6) {
+                break;
+            }
+
+            else {
+                System.out.println("Invalid Choice!");
+            }
+        }
+
+        evaluate(questions, attempts);
+        currentUser.attempted = true;
     }
-    System.out.println();
-}
+
+    static void showPalette(ArrayList<Attempt> attempts) {
+        System.out.println("\n--- Question Palette ---");
+
+        for (int i = 0; i < attempts.size(); i++) {
+            Attempt a = attempts.get(i);
+
+            if (!a.visited)
+                System.out.print("Q" + (i + 1) + "[NA] ");
+            else if (a.marked)
+                System.out.print("Q" + (i + 1) + "[M] ");
+            else if (a.answer.equals(""))
+                System.out.print("Q" + (i + 1) + "[N] ");
+            else
+                System.out.print("Q" + (i + 1) + "[A] ");
+        }
+        System.out.println();
+    }
+
     // ---------------- RESULT ----------------
     static void showResult() {
         System.out.println("\nScore: " + currentUser.score + "/3");
@@ -228,33 +271,34 @@ static void showPalette(ArrayList<Attempt> attempts) {
 
     static void evaluate(ArrayList<Question> questions, ArrayList<Attempt> attempts) {
 
-    int correct = 0, wrong = 0;
+        int correct = 0, wrong = 0;
 
-    for (int i = 0; i < questions.size(); i++) {
-        if (attempts.get(i).answer.equalsIgnoreCase(questions.get(i).correct)) {
-            correct++;
-        } else if (!attempts.get(i).answer.equals("")) {
-            wrong++;
+        for (int i = 0; i < questions.size(); i++) {
+            if (attempts.get(i).answer.equalsIgnoreCase(questions.get(i).correct)) {
+                correct++;
+            } else if (!attempts.get(i).answer.equals("")) {
+                wrong++;
+            }
+        }
+
+        int total = questions.size();
+        double percent = (correct * 100.0) / total;
+
+        currentUser.score = correct;
+
+        System.out.println("\n--- Result ---");
+        System.out.println("Score: " + correct + "/" + total);
+        System.out.println("Correct: " + correct);
+        System.out.println("Wrong: " + wrong);
+        System.out.println("Percentage: " + percent + "%");
+
+        if (percent >= 40) {
+            System.out.println("PASS 🎉");
+        } else {
+            System.out.println("FAIL ");
         }
     }
 
-    int total = questions.size();
-    double percent = (correct * 100.0) / total;
-
-    currentUser.score = correct;
-
-    System.out.println("\n--- Result ---");
-    System.out.println("Score: " + correct + "/" + total);
-    System.out.println("Correct: " + correct);
-    System.out.println("Wrong: " + wrong);
-    System.out.println("Percentage: " + percent + "%");
-
-    if (percent >= 40) {
-        System.out.println("PASS 🎉");
-    } else {
-        System.out.println("FAIL ");
-    }
-}
     // ---------------- LEADERBOARD ----------------
     static void leaderboard() {
         System.out.println("\n--- Leaderboard ---");
@@ -265,58 +309,96 @@ static void showPalette(ArrayList<Attempt> attempts) {
     }
 
     // ---------------- MENU ----------------
-    static void menu() {
+    public static void menu() {
         while (true) {
-           System.out.println("\n1.Take Quiz 2.Result 3.Leaderboard 4.Notes 5.Logout");
+            System.out.println("\n1.Take Quiz 2.Result 3.Leaderboard 4.Notes 5.Logout");
             int ch = sc.nextInt();
 
-            if (ch == 1) startQuiz();
-else if (ch == 2) showResult();
-else if (ch == 3) leaderboard();
-else if (ch == 4) showNotes();
-else return;
+            if (ch == 1)
+                startQuiz();
+            else if (ch == 2)
+                showResult();
+            else if (ch == 3)
+                leaderboard();
+            else if (ch == 4)
+                showNotes();
+            else
+                return;
         }
     }
 
     static void showNotes() {
-    System.out.println("\n--- Study Notes ---");
-    System.out.println("1. Java");
-    System.out.println("2. C");
-    System.out.println("3. Aptitude");
+        System.out.println("\n--- Study Notes ---");
+        System.out.println("1. Java");
+        System.out.println("2. C");
+        System.out.println("3. Aptitude");
 
-    int ch = sc.nextInt();
+        int ch = sc.nextInt();
 
-    if (ch == 1) {
-        System.out.println("\nJava Notes:");
-        System.out.println("- OOP: Encapsulation, Inheritance, Polymorphism");
-        System.out.println("- JVM: Java Virtual Machine");
-        System.out.println("- int size = 4 bytes");
+        if (ch == 1) {
+            System.out.println("\nJava Notes:");
+            System.out.println("- OOP: Encapsulation, Inheritance, Polymorphism");
+            System.out.println("- JVM: Java Virtual Machine");
+            System.out.println("- int size = 4 bytes");
+        }
+
+        else if (ch == 2) {
+            System.out.println("\nC Notes:");
+            System.out.println("- Developed by Dennis Ritchie");
+            System.out.println("- Middle level language");
+            System.out.println("- File extension: .c");
+        }
+
+        else if (ch == 3) {
+            System.out.println("\nAptitude Notes:");
+            System.out.println("- Practice basic arithmetic");
+            System.out.println("- Focus on speed & accuracy");
+        }
     }
 
-    else if (ch == 2) {
-        System.out.println("\nC Notes:");
-        System.out.println("- Developed by Dennis Ritchie");
-        System.out.println("- Middle level language");
-        System.out.println("- File extension: .c");
+    static void mainMenu() {
+        while (true) {
+
+            System.out.println("\n1. Learn");
+            System.out.println("2. Quiz");
+            System.out.println("3. Exit");
+
+            int ch = sc.nextInt();
+
+            if (ch == 1) {
+                hand.subjectMenu(); // Open LMS
+            }
+
+            else if (ch == 2) {
+                menu(); // Direct Quiz
+            }
+
+            else if (ch == 3) {
+                currentUser = null;
+                break;
+            }
+
+            else {
+                System.out.println("Invalid Choice!");
+            }
+        }
     }
 
-    else if (ch == 3) {
-        System.out.println("\nAptitude Notes:");
-        System.out.println("- Practice basic arithmetic");
-        System.out.println("- Focus on speed & accuracy");
-    }
-}
-public static void mainexec(){
-    while (true) {
+    public static void mainexec() {
+        while (true) {
             // System.out.println("\n1.Signup 2.Login 3.Exit");
             project.banner1();
             int ch = sc.nextInt();
 
-            if (ch == 1) signup();
-            else if (ch == 2 && login()) menu();
-            else if (ch == 3) break;
+            if (ch == 1)
+                signup();
+            else if (ch == 2 && login())
+                mainMenu();
+            else if (ch == 3)
+                break;
         }
-}
+    }
+
     // ---------------- MAIN ----------------
     public static void main(String[] args) {
 

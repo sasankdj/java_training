@@ -133,7 +133,7 @@ public class hand {
                 sc.nextLine();
             t = sc.nextLine();
             } else if (lms == 3) {
-               QuizSystem.mainexec();
+               QuizSystem.menu();
 
             } else if (lms == 4) {
                 subjectMenu();
