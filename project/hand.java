@@ -121,6 +121,8 @@ public class hand {
         while (true) {
 
             lessons(c, sub, t);
+            System.out.println("press enter to continue..");
+            sc.nextLine();
             project.lmsMenu();
             int lms = Integer.parseInt(sc.next());
             if (lms == 1) {
@@ -131,6 +133,7 @@ public class hand {
                 sc.nextLine();
             t = sc.nextLine();
             } else if (lms == 3) {
+               QuizSystem.mainexec();
 
             } else if (lms == 4) {
                 subjectMenu();

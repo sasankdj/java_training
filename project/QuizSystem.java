@@ -1,4 +1,7 @@
+package p1;
 import java.util.*;
+
+import p1.project;
 
 class User {
     String username;
@@ -303,16 +306,20 @@ else return;
         System.out.println("- Focus on speed & accuracy");
     }
 }
-    // ---------------- MAIN ----------------
-    public static void main(String[] args) {
-
-        while (true) {
-            System.out.println("\n1.Signup 2.Login 3.Exit");
+public static void mainexec(){
+    while (true) {
+            // System.out.println("\n1.Signup 2.Login 3.Exit");
+            project.banner1();
             int ch = sc.nextInt();
 
             if (ch == 1) signup();
             else if (ch == 2 && login()) menu();
             else if (ch == 3) break;
         }
+}
+    // ---------------- MAIN ----------------
+    public static void main(String[] args) {
+
+        mainexec();
     }
 }

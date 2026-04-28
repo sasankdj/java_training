@@ -132,7 +132,7 @@ RESET
         );
 
     }
-     static void theLms() {
+    public static void theLms() {
 
         System.out.println("  _____    _   _  U _____ u       _      __  __    ____     ");
         System.out.println(" |_ \" _|  |'| |'| \\| ___\"|/      |\"|   U|' \\/ '|u / __\"| u  ");
