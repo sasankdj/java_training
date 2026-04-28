@@ -2,7 +2,6 @@ package p1;
 
 import java.util.*;
 
-import p1.hand;
 
 class User {
     String username;
@@ -133,8 +132,9 @@ public class QuizSystem {
 
         ArrayList<Question> questions = new ArrayList<>();
 
-        System.out.println("\nChoose Category:");
-        System.out.println("1. Java 2. C 3. Aptitude");
+        // System.out.println("\nChoose Category:");
+        // System.out.println("1. Java 2. C 3. Aptitude");
+        project.intro();
         int ch = sc.nextInt();
 
         // -------- JAVA --------
@@ -191,13 +191,13 @@ public class QuizSystem {
             int choice = sc.nextInt();
 
             if (choice == 1) {
-    if (current < n - 1) {
-        current++;
-    } else {
-        System.out.println("Last question reached. Submitting quiz...");
-        break;
-    }
-}
+                if (current < n - 1) {
+                    current++;
+                } else {
+                    System.out.println("Last question reached. Submitting quiz...");
+                    break;
+                }
+            }
 
             else if (choice == 2) {
                 if (current > 0) {
@@ -311,7 +311,8 @@ public class QuizSystem {
     // ---------------- MENU ----------------
     public static void menu() {
         while (true) {
-            System.out.println("\n1.Take Quiz 2.Result 3.Leaderboard 4.Notes 5.Logout");
+            // System.out.println("\n1.Take Quiz 2.Result 3.Leaderboard 4.Notes 5.Logout");
+            project.quizMenu();
             int ch = sc.nextInt();
 
             if (ch == 1)
