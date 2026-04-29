@@ -123,6 +123,7 @@ public class hand {
             lessons(c, sub, t);
             System.out.println("press enter to continue..");
             sc.nextLine();
+            sc.nextLine();
             project.lmsMenu();
             int lms = Integer.parseInt(sc.next());
             if (lms == 1) {

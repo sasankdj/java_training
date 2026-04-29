@@ -2,7 +2,6 @@ package p1;
 
 import java.util.*;
 
-
 class User {
     String username;
     String password;
@@ -132,8 +131,6 @@ public class QuizSystem {
 
         ArrayList<Question> questions = new ArrayList<>();
 
-        // System.out.println("\nChoose Category:");
-        // System.out.println("1. Java 2. C 3. Aptitude");
         project.intro();
         int ch = sc.nextInt();
 
@@ -235,7 +232,9 @@ public class QuizSystem {
             }
         }
 
-        evaluate(questions, attempts);
+        // evaluate(questions, attempts);
+        // currentUser.attempted = true;
+        currentUser.score = calculateScore(questions, attempts);
         currentUser.attempted = true;
     }
 
@@ -257,15 +256,53 @@ public class QuizSystem {
         System.out.println();
     }
 
+    static int calculateScore(ArrayList<Question> questions, ArrayList<Attempt> attempts) {
+
+        int correct = 0;
+
+        for (int i = 0; i < questions.size(); i++) {
+            if (attempts.get(i).answer.equalsIgnoreCase(questions.get(i).correct)) {
+                correct++;
+            }
+        }
+
+        return correct;
+    }
+
     // ---------------- RESULT ----------------
     static void showResult() {
-        System.out.println("\nScore: " + currentUser.score + "/3");
 
-        if (currentUser.score >= 2) {
-            System.out.println("PASS 🎉");
-            System.out.println("Congratulations " + currentUser.username + "!");
+        int correct = currentUser.score;
+        int total = 3;
+        int wrong = total - correct;
+        double percent = (correct * 100.0) / total;
+
+        String GREEN = "\u001B[32m";
+        String RED = "\u001B[31m";
+        String YELLOW = "\u001B[33m";
+        String CYAN = "\u001B[36m";
+        String RESET = "\u001B[0m";
+
+        System.out.println(CYAN + "\n+--------------------------------------+");
+        System.out.println("|            QUIZ RESULT TABLE         |");
+        System.out.println("+--------------+-----------------------+");
+
+        System.out.printf("| %-12s | %-21s |\n", "Score", correct + "/" + total);
+        System.out.println("+--------------+-----------------------+");
+
+        System.out.printf("| %-12s | %-21s |\n", "Correct", GREEN + correct + RESET);
+        System.out.println(CYAN + "+--------------+-----------------------+");
+
+        System.out.printf("| %-12s | %-21s |\n", "Wrong", RED + wrong + RESET);
+        System.out.println(CYAN + "+--------------+-----------------------+");
+
+        System.out.printf("| %-12s | %-21s |\n", "Percentage", YELLOW + percent + "%" + RESET);
+        System.out.println(CYAN + "+--------------+-----------------------+" + RESET);
+
+        if (percent >= 40) {
+            System.out.println(GREEN + "\nPASS - Congratulations " + currentUser.username + "!" + RESET);
         } else {
-            System.out.println("FAIL ");
+            System.out.println(RED + "\nFAIL - Better Luck Next Time!" + RESET);
         }
     }
 
@@ -286,33 +323,59 @@ public class QuizSystem {
 
         currentUser.score = correct;
 
-        System.out.println("\n--- Result ---");
-        System.out.println("Score: " + correct + "/" + total);
-        System.out.println("Correct: " + correct);
-        System.out.println("Wrong: " + wrong);
-        System.out.println("Percentage: " + percent + "%");
+        String GREEN = "\u001B[32m";
+        String RED = "\u001B[31m";
+        String YELLOW = "\u001B[33m";
+        String CYAN = "\u001B[36m";
+        String RESET = "\u001B[0m";
+
+        System.out.println(CYAN + "\n+--------------------------------------+");
+        System.out.println("|            QUIZ RESULT TABLE         |");
+        System.out.println("+--------------+-----------------------+");
+
+        System.out.printf("| %-12s | %-21s |\n", "Score", correct + "/" + total);
+        System.out.println("+--------------+-----------------------+");
+
+        System.out.printf("| %-12s | %-21s |\n", "Correct", GREEN + correct + RESET);
+        System.out.println(CYAN + "+--------------+-----------------------+");
+
+        System.out.printf("| %-12s | %-21s |\n", "Wrong", RED + wrong + RESET);
+        System.out.println(CYAN + "+--------------+-----------------------+");
+
+        System.out.printf("| %-12s | %-21s |\n", "Percentage", YELLOW + percent + "%" + RESET);
+        System.out.println(CYAN + "+--------------+-----------------------+" + RESET);
 
         if (percent >= 40) {
-            System.out.println("PASS 🎉");
+            System.out.println(GREEN + "\nPASS - Congratulations!" + RESET);
         } else {
-            System.out.println("FAIL ");
+            System.out.println(RED + "\nFAIL - Better Luck Next Time!" + RESET);
         }
     }
 
-    // ---------------- LEADERBOARD ----------------
     static void leaderboard() {
-        System.out.println("\n--- Leaderboard ---");
+
+        String CYAN = "\u001B[36m";
+        String GREEN = "\u001B[32m";
+        String RESET = "\u001B[0m";
+
+        System.out.println(CYAN + "\n+-------------------------------+");
+        System.out.println("|          LEADERBOARD          |");
+        System.out.println("+--------------+----------------+");
+        System.out.printf("| %-12s | %-14s |\n", "Username", "Score");
+        System.out.println("+--------------+----------------+");
 
         for (User u : users) {
-            System.out.println(u.username + " : " + u.score);
+            System.out.printf("| %-12s | %-14s |\n", u.username, GREEN + u.score + RESET);
         }
+
+        System.out.println(CYAN + "+--------------+----------------+" + RESET);
     }
 
     // ---------------- MENU ----------------
     public static void menu() {
         while (true) {
             // System.out.println("\n1.Take Quiz 2.Result 3.Leaderboard 4.Notes 5.Logout");
-            project.quizMenu();
+            project.lmsMenu();
             int ch = sc.nextInt();
 
             if (ch == 1)
@@ -322,47 +385,17 @@ public class QuizSystem {
             else if (ch == 3)
                 leaderboard();
             else if (ch == 4)
-                showNotes();
+               hand.subjectMenu();
             else
                 return;
         }
     }
 
-    static void showNotes() {
-        System.out.println("\n--- Study Notes ---");
-        System.out.println("1. Java");
-        System.out.println("2. C");
-        System.out.println("3. Aptitude");
-
-        int ch = sc.nextInt();
-
-        if (ch == 1) {
-            System.out.println("\nJava Notes:");
-            System.out.println("- OOP: Encapsulation, Inheritance, Polymorphism");
-            System.out.println("- JVM: Java Virtual Machine");
-            System.out.println("- int size = 4 bytes");
-        }
-
-        else if (ch == 2) {
-            System.out.println("\nC Notes:");
-            System.out.println("- Developed by Dennis Ritchie");
-            System.out.println("- Middle level language");
-            System.out.println("- File extension: .c");
-        }
-
-        else if (ch == 3) {
-            System.out.println("\nAptitude Notes:");
-            System.out.println("- Practice basic arithmetic");
-            System.out.println("- Focus on speed & accuracy");
-        }
-    }
 
     static void mainMenu() {
         while (true) {
 
-            System.out.println("\n1. Learn");
-            System.out.println("2. Quiz");
-            System.out.println("3. Exit");
+            project.learn();
 
             int ch = sc.nextInt();
 
