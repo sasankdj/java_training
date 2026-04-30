@@ -304,6 +304,9 @@ public class QuizSystem {
         } else {
             System.out.println(RED + "\nFAIL - Better Luck Next Time!" + RESET);
         }
+         System.out.println("Press any key to continue...");
+        sc.nextLine();
+        sc.nextLine();
     }
 
     static void evaluate(ArrayList<Question> questions, ArrayList<Attempt> attempts) {
@@ -350,6 +353,9 @@ public class QuizSystem {
         } else {
             System.out.println(RED + "\nFAIL - Better Luck Next Time!" + RESET);
         }
+        System.out.println("Press any key to continue...");
+        sc.nextLine();
+        sc.nextLine();
     }
 
     static void leaderboard() {
@@ -369,13 +375,16 @@ public class QuizSystem {
         }
 
         System.out.println(CYAN + "+--------------+----------------+" + RESET);
+         System.out.println("Press any key to continue...");
+        sc.nextLine();
+        sc.nextLine();
     }
 
     // ---------------- MENU ----------------
     public static void menu() {
         while (true) {
             // System.out.println("\n1.Take Quiz 2.Result 3.Leaderboard 4.Notes 5.Logout");
-            project.lmsMenu();
+            project.quizMenu();
             int ch = sc.nextInt();
 
             if (ch == 1)
