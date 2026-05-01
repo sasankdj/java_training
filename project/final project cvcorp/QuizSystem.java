@@ -116,6 +116,32 @@ public class QuizSystem {
         return 0;
     }
 
+
+static String timedInput(int seconds) {
+
+    final String[] input = {null};
+
+    Thread t = new Thread(() -> {
+        input[0] = sc.next();
+    });
+
+    t.start();
+
+    for (int i = seconds; i > 0; i--) {
+        System.out.print("\rAnswer within " + i + " sec: ");
+
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {}
+
+        if (input[0] != null) {
+            return input[0];
+        }
+    }
+
+    System.out.println("\nTime up! Skipped.");
+    return "0";
+}
     // ---------------- QUIZ ----------------
     static void startQuiz() {
 
@@ -177,7 +203,7 @@ public class QuizSystem {
                 System.out.println(q.options);
 
             System.out.print("Answer (or 0 skip): ");
-            String ans = sc.next();
+            String ans = timedInput(30);
 
             if (!ans.equals("0")) {
                 a.answer = ans;
@@ -237,7 +263,6 @@ public class QuizSystem {
         currentUser.score = calculateScore(questions, attempts);
         currentUser.attempted = true;
     }
-
     static void showPalette(ArrayList<Attempt> attempts) {
         System.out.println("\n--- Question Palette ---");
 
