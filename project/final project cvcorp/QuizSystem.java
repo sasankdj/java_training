@@ -2,6 +2,183 @@ package p1;
 
 import java.util.*;
 
+// ANSI Color and Console Utility Class
+class ConsoleUtils {
+    // ANSI Colors
+    public static final String RESET = "\u001B[0m";
+    public static final String BLACK = "\u001B[30m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String PURPLE = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
+    public static final String WHITE = "\u001B[37m";
+    
+    // Background Colors
+    public static final String BG_BLACK = "\u001B[40m";
+    public static final String BG_RED = "\u001B[41m";
+    public static final String BG_GREEN = "\u001B[42m";
+    public static final String BG_YELLOW = "\u001B[43m";
+    public static final String BG_BLUE = "\u001B[44m";
+    public static final String BG_PURPLE = "\u001B[45m";
+    public static final String BG_CYAN = "\u001B[46m";
+    
+    // Text Styles
+    public static final String BOLD = "\u001B[1m";
+    public static final String UNDERLINE = "\u001B[4m";
+    
+    // Clear screen
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+    
+    // Get console width (default 120 if can't detect)
+    public static int getConsoleWidth() {
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                Process process = Runtime.getRuntime().exec("cmd /c mode con");
+                try (java.io.BufferedReader reader = new java.io.BufferedReader(
+                        new java.io.InputStreamReader(process.getInputStream()))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        if (line.contains("Columns")) {
+                            String[] parts = line.trim().split(":");
+                            if (parts.length > 1) {
+                                return Integer.parseInt(parts[1].trim());
+                            }
+                        }
+                    }
+                }
+            } else {
+                Process process = Runtime.getRuntime().exec("tput cols");
+                try (java.io.BufferedReader reader = new java.io.BufferedReader(
+                        new java.io.InputStreamReader(process.getInputStream()))) {
+                    String line = reader.readLine();
+                    if (line != null) {
+                        return Integer.parseInt(line);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            return 120;
+        }
+        return 120;
+    }
+    
+    // Center text with border
+    public static void printCenteredWithBorder(String text) {
+        int width = getConsoleWidth() - 4;
+        String[] lines = text.split("\n");
+        
+        System.out.println(CYAN + "+" + "-".repeat(width) + "+" + RESET);
+        
+        for (String line : lines) {
+            String plainLine = line.replaceAll("\u001B\\[[;\\d]*m", "");
+            int padding = (width - plainLine.length()) / 2;
+            
+            System.out.print(CYAN + "|" + RESET);
+            if (padding > 0) System.out.print(" ".repeat(padding));
+            System.out.print(line);
+            if (padding > 0) System.out.print(" ".repeat(width - plainLine.length() - padding));
+            System.out.println(CYAN + "|" + RESET);
+        }
+        
+        System.out.println(CYAN + "+" + "-".repeat(width) + "+" + RESET);
+    }
+    
+    // Print centered text
+    public static void printCentered(String text) {
+        int width = getConsoleWidth();
+        String[] lines = text.split("\n");
+        
+        for (String line : lines) {
+            String plainLine = line.replaceAll("\u001B\\[[;\\d]*m", "");
+            int padding = (width - plainLine.length()) / 2;
+            if (padding > 0) System.out.print(" ".repeat(padding));
+            System.out.println(line);
+        }
+    }
+    
+    // Print in a bordered box
+    public static void printInBox(String text, String borderColor) {
+        int width = getConsoleWidth() - 4;
+        String[] lines = text.split("\n");
+        int maxLen = 0;
+        
+        for (String line : lines) {
+            String plainLine = line.replaceAll("\u001B\\[[;\\d]*m", "");
+            maxLen = Math.max(maxLen, plainLine.length());
+        }
+        
+        int boxWidth = Math.min(maxLen + 4, width);
+        
+        System.out.println(borderColor + "+" + "-".repeat(boxWidth - 2) + "+" + RESET);
+        
+        for (String line : lines) {
+            String plainLine = line.replaceAll("\u001B\\[[;\\d]*m", "");
+            int padding = (boxWidth - 2 - plainLine.length()) / 2;
+            
+            System.out.print(borderColor + "|" + RESET);
+            if (padding > 0) System.out.print(" ".repeat(padding));
+            System.out.print(line);
+            if (padding > 0) System.out.print(" ".repeat(boxWidth - 2 - plainLine.length() - padding));
+            System.out.println(borderColor + "|" + RESET);
+        }
+        
+        System.out.println(borderColor + "+" + "-".repeat(boxWidth - 2) + "+" + RESET);
+    }
+    
+    // Print header with separator
+    public static void printHeader(String title) {
+        int width = getConsoleWidth();
+        String coloredTitle = YELLOW + BOLD + title + RESET;
+        int padding = (width - title.length()) / 2;
+        
+        System.out.println();
+        System.out.println(CYAN + "=".repeat(width) + RESET);
+        if (padding > 0) System.out.print(" ".repeat(padding));
+        System.out.println(coloredTitle);
+        System.out.println(CYAN + "=".repeat(width) + RESET);
+    }
+    
+    // Animated scroll effect
+    public static void scrollUp(int lines) throws InterruptedException {
+        for (int i = 0; i < lines; i++) {
+            System.out.println();
+            Thread.sleep(30);
+        }
+    }
+    
+    // Animated text reveal
+    public static void typewriterEffect(String text, int delay) throws InterruptedException {
+        for (char c : text.toCharArray()) {
+            System.out.print(c);
+            Thread.sleep(delay);
+        }
+        System.out.println();
+    }
+    
+    // Press any key to continue
+    public static void pressAnyKey(Scanner sc) {
+        System.out.print(GREEN + "\n[ Press Enter to continue ]" + RESET);
+        try {
+            sc.nextLine();
+            sc.nextLine();
+        } catch (Exception e) {
+            sc.nextLine();
+        }
+    }
+    
+    // Clear and scroll
+    public static void clearAndScroll() throws InterruptedException {
+        scrollUp(2);
+        clearScreen();
+        scrollUp(1);
+    }
+}
+
 class User {
     String username;
     String password;
@@ -32,6 +209,7 @@ class Attempt {
     String answer = "";
     boolean visited = false;
     boolean marked = false;
+    int timeSpent = 0;
 }
 
 public class QuizSystem {
@@ -41,435 +219,470 @@ public class QuizSystem {
     static User currentUser = null;
 
     // ---------------- SIGNUP ----------------
-    static void signup() {
-        System.out.print("Enter Username: ");
+    static void signup() throws InterruptedException {
+        ConsoleUtils.clearAndScroll();
+        ConsoleUtils.printHeader("SIGN UP");
+        
+        ConsoleUtils.printCenteredWithBorder(ConsoleUtils.GREEN + "Create New Account" + ConsoleUtils.RESET);
+        
+        System.out.print(ConsoleUtils.CYAN + "+--------------------------------------------------+\n" +
+                         "| Enter Username: " + ConsoleUtils.RESET);
         String u = sc.next();
-
-        System.out.print("Enter Password: ");
+        
+        System.out.print(ConsoleUtils.CYAN + "| Enter Password: " + ConsoleUtils.RESET);
         String p = sc.next();
-
+        
         users.add(new User(u, p));
-        System.out.println("Signup Successful!\n");
+        
+        ConsoleUtils.printInBox("[+] Signup Successful!", ConsoleUtils.GREEN);
+        ConsoleUtils.pressAnyKey(sc);
     }
 
     // ---------------- LOGIN ----------------
-    static boolean login() {
-        System.out.print("Enter Username: ");
+    static boolean login() throws InterruptedException {
+        ConsoleUtils.clearAndScroll();
+        ConsoleUtils.printHeader("LOGIN");
+        
+        ConsoleUtils.printCenteredWithBorder(ConsoleUtils.YELLOW + "Welcome Back!" + ConsoleUtils.RESET);
+        
+        System.out.print(ConsoleUtils.CYAN + "+--------------------------------------------------+\n" +
+                         "| Username: " + ConsoleUtils.RESET);
         String u = sc.next();
-
-        System.out.print("Enter Password: ");
+        
+        System.out.print(ConsoleUtils.CYAN + "| Password: " + ConsoleUtils.RESET);
         String p = sc.next();
 
         for (User user : users) {
             if (user.username.equals(u) && user.password.equals(p)) {
                 currentUser = user;
-                System.out.println("Login Successful!\n");
+                ConsoleUtils.printInBox("[+] Login Successful!", ConsoleUtils.GREEN);
+                ConsoleUtils.typewriterEffect("Welcome " + u + "!", 50);
+                Thread.sleep(1000);
                 return true;
             }
         }
 
-        System.out.println("Invalid Credentials!\n");
+        ConsoleUtils.printInBox("[X] Invalid Credentials!", ConsoleUtils.RED);
+        ConsoleUtils.pressAnyKey(sc);
         return false;
     }
 
     // ---------------- OTP ----------------
-    static boolean otp() {
+    static boolean otp() throws InterruptedException {
+        ConsoleUtils.clearAndScroll();
+        ConsoleUtils.printHeader("OTP VERIFICATION");
+        
         int otp = 1000 + (int) (Math.random() * 9000);
-        System.out.println("OTP: " + otp);
-
-        System.out.print("Enter OTP: ");
+        
+        ConsoleUtils.printInBox("Your OTP: " + otp, ConsoleUtils.YELLOW);
+        
+        System.out.print(ConsoleUtils.CYAN + "Enter OTP: " + ConsoleUtils.RESET);
         int uotp = sc.nextInt();
 
-        return otp == uotp;
-    }
-
-    static int askWithTimer(String question, String options, String correct) {
-
-        try {
-            System.out.println("\n" + question);
-
-            if (!options.equals(""))
-                System.out.println(options);
-
-            System.out.println(" You have 5 seconds (answer quickly!)");
-
-            long start = System.currentTimeMillis();
-
-            String ans = sc.next(); // user can type immediately
-
-            long end = System.currentTimeMillis();
-
-            long timeTaken = (end - start) / 1000;
-
-            if (timeTaken > 5) {
-                System.out.println(" Time's up!");
-                return 0;
-            }
-
-            if (ans.equalsIgnoreCase(correct)) {
-                return 1;
-            }
-
-        } catch (Exception e) {
-        }
-
-        return 0;
-    }
-
-
-static String timedInput(int seconds) {
-
-    final String[] input = {null};
-
-    Thread t = new Thread(() -> {
-        input[0] = sc.next();
-    });
-
-    t.start();
-
-    for (int i = seconds; i > 0; i--) {
-        System.out.print("\rAnswer within " + i + " sec: ");
-
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {}
-
-        if (input[0] != null) {
-            return input[0];
+        if (otp == uotp) {
+            ConsoleUtils.printInBox("[+] OTP Verified!", ConsoleUtils.GREEN);
+            return true;
+        } else {
+            ConsoleUtils.printInBox("[X] Wrong OTP!", ConsoleUtils.RED);
+            return false;
         }
     }
 
-    System.out.println("\nTime up! Skipped.");
-    return "0";
-}
+    // ---------------- BEAUTIFUL QUESTION PALETTE ----------------
+    static void showPalette(ArrayList<Attempt> attempts) throws InterruptedException {
+        ConsoleUtils.clearAndScroll();
+        ConsoleUtils.printHeader("QUESTION PALETTE");
+        
+        int n = attempts.size();
+        
+        System.out.println(ConsoleUtils.CYAN + "+" + "=".repeat(70) + "+" + ConsoleUtils.RESET);
+        System.out.printf(ConsoleUtils.YELLOW + "| %-3s | %-10s | %-15s | %-30s |\n" + ConsoleUtils.RESET, 
+                         "Q.No", "Status", "Marked", "Answer");
+        System.out.println(ConsoleUtils.CYAN + "+" + "-".repeat(70) + "+" + ConsoleUtils.RESET);
+        
+        for (int i = 0; i < n; i++) {
+            Attempt a = attempts.get(i);
+            String status, marked, answer;
+            
+            if (!a.visited) {
+                status = ConsoleUtils.RED + "Not Visited" + ConsoleUtils.RESET;
+                marked = ConsoleUtils.RED + "No" + ConsoleUtils.RESET;
+                answer = ConsoleUtils.RED + "-" + ConsoleUtils.RESET;
+            } else if (a.answer.equals("")) {
+                status = ConsoleUtils.YELLOW + "Visited" + ConsoleUtils.RESET;
+                marked = a.marked ? ConsoleUtils.GREEN + "Yes" + ConsoleUtils.RESET : ConsoleUtils.RED + "No" + ConsoleUtils.RESET;
+                answer = ConsoleUtils.YELLOW + "Not Answered" + ConsoleUtils.RESET;
+            } else {
+                status = ConsoleUtils.GREEN + "Answered" + ConsoleUtils.RESET;
+                marked = a.marked ? ConsoleUtils.GREEN + "Yes" + ConsoleUtils.RESET : ConsoleUtils.RED + "No" + ConsoleUtils.RESET;
+                answer = ConsoleUtils.GREEN + a.answer + ConsoleUtils.RESET;
+            }
+            
+            System.out.printf("| %-3d | %-10s | %-15s | %-30s |\n", 
+                             (i+1), status, marked, answer);
+        }
+        
+        System.out.println(ConsoleUtils.CYAN + "+" + "=".repeat(70) + "+" + ConsoleUtils.RESET);
+        
+        // Legend
+        System.out.println("\n" + ConsoleUtils.YELLOW + "LEGEND:" + ConsoleUtils.RESET);
+        System.out.println(ConsoleUtils.GREEN + "[Answered] " + ConsoleUtils.RESET + "- Question answered");
+        System.out.println(ConsoleUtils.YELLOW + "[Visited] " + ConsoleUtils.RESET + "- Question seen but not answered");
+        System.out.println(ConsoleUtils.RED + "[Not Visited] " + ConsoleUtils.RESET + "- Question not yet seen");
+        System.out.println(ConsoleUtils.GREEN + "[Marked] " + ConsoleUtils.RESET + "- Question marked for review");
+        
+        ConsoleUtils.pressAnyKey(sc);
+    }
+    
     // ---------------- QUIZ ----------------
-    static void startQuiz() {
-
+    static void startQuiz() throws InterruptedException {
+        ConsoleUtils.clearAndScroll();
+        
         if (currentUser.attempted) {
-            System.out.println("You already attempted!\n");
+            ConsoleUtils.printInBox("[!] You have already attempted the quiz!", ConsoleUtils.YELLOW);
+            ConsoleUtils.pressAnyKey(sc);
             return;
         }
-
+        
         if (!otp()) {
-            System.out.println("Wrong OTP!\n");
             return;
         }
-
-        ArrayList<Question> questions = new ArrayList<>();
-
+        
+        ConsoleUtils.clearAndScroll();
+        ConsoleUtils.printHeader("SUBJECT SELECTION");
+        
         project.intro();
         int ch = sc.nextInt();
-
-        // -------- JAVA --------
+        
+        ArrayList<Question> questions = new ArrayList<>();
+        
         if (ch == 1) {
-            questions.add(new Question("What is Java?", "A.Language B.OS C.Browser D.Hardware", "A"));
-            questions.add(new Question("Size of int?", "A.2 B.4 C.8 D.16", "B"));
-            questions.add(new Question("OOP stands for?", "A.Object Oriented Programming B.Other", "A"));
+            questions.add(new Question("What is Java?", "A. Language  B. OS  C. Browser  D. Hardware", "A"));
+            questions.add(new Question("What is the size of int in Java?", "A. 2 bytes  B. 4 bytes  C. 8 bytes  D. 16 bytes", "B"));
+            questions.add(new Question("What does OOP stand for?", "A. Object Oriented Programming  B. Other Programming", "A"));
+        } else if (ch == 2) {
+            questions.add(new Question("Who developed C language?", "A. Dennis Ritchie  B. James Gosling", "A"));
+            questions.add(new Question("C is which level language?", "A. Low Level  B. Middle Level  C. High Level", "B"));
+            questions.add(new Question("What is the extension of C file?", "A. .java  B. .c  C. .py", "B"));
+        } else if (ch == 3) {
+            questions.add(new Question("2 + 2 = ?", "", "4"));
+            questions.add(new Question("5 x 3 = ?", "", "15"));
+            questions.add(new Question("10 / 2 = ?", "", "5"));
         }
-
-        // -------- C --------
-        else if (ch == 2) {
-            questions.add(new Question("Who developed C?", "A.Dennis B.Gosling", "A"));
-            questions.add(new Question("C is?", "A.Low B.Middle C.High", "B"));
-            questions.add(new Question("Extension of C?", "A..java B..c C..py", "B"));
-        }
-
-        // -------- APTITUDE --------
-        else if (ch == 3) {
-            questions.add(new Question("2+2=?", "", "4"));
-            questions.add(new Question("5*3=?", "", "15"));
-            questions.add(new Question("10/2=?", "", "5"));
-        }
-
+        
         Collections.shuffle(questions);
-
         int n = questions.size();
-
-        // Attempt tracking
         ArrayList<Attempt> attempts = new ArrayList<>();
-        for (int i = 0; i < n; i++)
-            attempts.add(new Attempt());
-
+        for (int i = 0; i < n; i++) attempts.add(new Attempt());
+        
         int current = 0;
-
-        while (true) {
+        int totalTime = n * 30;
+        long examStart = System.currentTimeMillis();
+        boolean quizCompleted = false;
+        
+        while (!quizCompleted) {
+            ConsoleUtils.clearAndScroll();
+            
+            int elapsed = (int)((System.currentTimeMillis() - examStart) / 1000);
+            int remainingTotal = totalTime - elapsed;
+            
+            if (remainingTotal <= 0) {
+                ConsoleUtils.printInBox("[!] TIME OVER! Auto-submitting...", ConsoleUtils.RED);
+                Thread.sleep(1500);
+                break;
+            }
+            
             Question q = questions.get(current);
             Attempt a = attempts.get(current);
-
-            a.visited = true;
-
-            System.out.println("\nQ" + (current + 1) + ": " + q.question);
-            if (!q.options.equals(""))
-                System.out.println(q.options);
-
-            System.out.print("Answer (or 0 skip): ");
-            String ans = timedInput(30);
-
-            if (!ans.equals("0")) {
-                a.answer = ans;
-                a.marked = false;
-            }
-
-            System.out.println("\n1.Next 2.Previous 3.Jump 4.Mark 5.Palette 6.Submit");
-            int choice = sc.nextInt();
-
-            if (choice == 1) {
+            
+            int perLimit = 30;
+            int remainingQ = perLimit - a.timeSpent;
+            
+            if (remainingQ <= 0) {
+                ConsoleUtils.printInBox("[!] Time over for this question!", ConsoleUtils.RED);
                 if (current < n - 1) {
                     current++;
                 } else {
-                    System.out.println("Last question reached. Submitting quiz...");
+                    ConsoleUtils.printInBox("[!] Last question - Please submit or jump to other questions!", ConsoleUtils.YELLOW);
+                    Thread.sleep(1500);
+                }
+                continue;
+            }
+            
+            a.visited = true;
+            
+            // Show if it's the last question
+            if (current == n - 1) {
+                ConsoleUtils.printHeader("LAST QUESTION - " + (current + 1) + "/" + n);
+                ConsoleUtils.printInBox("[!] THIS IS THE LAST QUESTION! You can submit after answering.", ConsoleUtils.YELLOW);
+            } else {
+                ConsoleUtils.printHeader("QUESTION " + (current + 1) + "/" + n);
+            }
+            
+            // Center the question
+            String centeredQuestion = q.question;
+            int width = ConsoleUtils.getConsoleWidth();
+            int qPadding = (width - q.question.length()) / 2;
+            if (qPadding > 0) centeredQuestion = " ".repeat(qPadding) + q.question;
+            System.out.println(ConsoleUtils.CYAN + centeredQuestion + ConsoleUtils.RESET);
+            
+            // Center the options
+            if (!q.options.equals("")) {
+                String centeredOptions = q.options;
+                int oPadding = (width - q.options.length()) / 2;
+                if (oPadding > 0) centeredOptions = " ".repeat(oPadding) + q.options;
+                System.out.println(ConsoleUtils.GREEN + centeredOptions + ConsoleUtils.RESET);
+            }
+            
+            System.out.println(ConsoleUtils.YELLOW + "[>] Question Time Left: " + remainingQ + " sec" + ConsoleUtils.RESET);
+            System.out.println(ConsoleUtils.RED + "[>] Total Time Left: " + remainingTotal + " sec" + ConsoleUtils.RESET);
+            
+            if (remainingTotal <= 10) {
+                ConsoleUtils.printInBox("[!] LAST " + remainingTotal + " SECONDS!", ConsoleUtils.RED);
+            }
+            
+            long start = System.currentTimeMillis();
+            System.out.print(ConsoleUtils.GREEN + "[?] Your Answer (0 to skip): " + ConsoleUtils.RESET);
+            String ans = sc.next();
+            long end = System.currentTimeMillis();
+            int spent = (int)((end - start) / 1000);
+            a.timeSpent += spent;
+            
+            if (!ans.equals("0")) {
+                a.answer = ans;
+                if (current == n - 1) {
+                    ConsoleUtils.printInBox("[+] Answer recorded for last question!", ConsoleUtils.GREEN);
+                    Thread.sleep(800);
+                }
+            }
+            
+            // Center the navigation menu
+            int widthNav = ConsoleUtils.getConsoleWidth();
+            String navMenu = 
+                "+---------------------------------------------------+\n" +
+                "|  1. Next    2. Previous    3. Jump               |\n" +
+                "|  4. Mark    5. Palette     6. Submit             |\n" +
+                "+---------------------------------------------------+";
+            
+            String[] navLines = navMenu.split("\n");
+            for (String line : navLines) {
+                int padding = (widthNav - line.length()) / 2;
+                if (padding > 0) System.out.print(" ".repeat(padding));
+                System.out.println(ConsoleUtils.YELLOW + line + ConsoleUtils.RESET);
+            }
+            
+            int choice = sc.nextInt();
+            
+            switch(choice) {
+                case 1: // Next
+                    if (current < n - 1) {
+                        current++;
+                    } else {
+                        ConsoleUtils.printInBox("[!] This is the last question! Use Submit (6) to finish or Jump (3) to go to other questions.", ConsoleUtils.YELLOW);
+                        Thread.sleep(1500);
+                    }
                     break;
-                }
-            }
-
-            else if (choice == 2) {
-                if (current > 0) {
-                    current--;
-                } else {
-                    System.out.println("This is the first question!");
-                }
-            }
-
-            else if (choice == 3) {
-                System.out.print("Enter question number: ");
-                int jump = sc.nextInt();
-
-                if (jump >= 1 && jump <= n) {
-                    current = jump - 1;
-                } else {
-                    System.out.println("Invalid Question Number!");
-                }
-            }
-
-            else if (choice == 4) {
-                a.marked = true;
-            }
-
-            else if (choice == 5) {
-                showPalette(attempts);
-            }
-
-            else if (choice == 6) {
-                break;
-            }
-
-            else {
-                System.out.println("Invalid Choice!");
+                    
+                case 2: // Previous
+                    if (current > 0) {
+                        current--;
+                    } else {
+                        ConsoleUtils.printInBox("[!] This is the first question!", ConsoleUtils.YELLOW);
+                        Thread.sleep(800);
+                    }
+                    break;
+                    
+                case 3: // Jump
+                    System.out.print(ConsoleUtils.CYAN + "Jump to question number (1-" + n + "): " + ConsoleUtils.RESET);
+                    int jump = sc.nextInt();
+                    if (jump >= 1 && jump <= n) {
+                        current = jump - 1;
+                        ConsoleUtils.printInBox("[+] Jumped to Question " + jump, ConsoleUtils.GREEN);
+                        Thread.sleep(800);
+                    } else {
+                        ConsoleUtils.printInBox("[X] Invalid question number!", ConsoleUtils.RED);
+                        Thread.sleep(800);
+                    }
+                    break;
+                    
+                case 4: // Mark
+                    a.marked = true;
+                    ConsoleUtils.printInBox("[+] Question " + (current + 1) + " marked for review!", ConsoleUtils.GREEN);
+                    Thread.sleep(800);
+                    break;
+                    
+                case 5: // Palette
+                    showPalette(attempts);
+                    break;
+                    
+                case 6: // Submit
+                    ConsoleUtils.printInBox("[!] Are you sure you want to submit?", ConsoleUtils.YELLOW);
+                    System.out.print(ConsoleUtils.GREEN + "Submit? (y/n): " + ConsoleUtils.RESET);
+                    String confirm = sc.next();
+                    if (confirm.equalsIgnoreCase("y")) {
+                        quizCompleted = true;
+                    }
+                    break;
+                    
+                default:
+                    ConsoleUtils.printInBox("[X] Invalid choice! Please select 1-6", ConsoleUtils.RED);
+                    Thread.sleep(800);
             }
         }
-
-        // evaluate(questions, attempts);
-        // currentUser.attempted = true;
+        
         currentUser.score = calculateScore(questions, attempts);
         currentUser.attempted = true;
+        
+        ConsoleUtils.printInBox("[+] Quiz Completed! Score: " + currentUser.score + "/" + n, ConsoleUtils.GREEN);
+        ConsoleUtils.pressAnyKey(sc);
     }
-    static void showPalette(ArrayList<Attempt> attempts) {
-        System.out.println("\n--- Question Palette ---");
-
-        for (int i = 0; i < attempts.size(); i++) {
-            Attempt a = attempts.get(i);
-
-            if (!a.visited)
-                System.out.print("Q" + (i + 1) + "[NA] ");
-            else if (a.marked)
-                System.out.print("Q" + (i + 1) + "[M] ");
-            else if (a.answer.equals(""))
-                System.out.print("Q" + (i + 1) + "[N] ");
-            else
-                System.out.print("Q" + (i + 1) + "[A] ");
-        }
-        System.out.println();
-    }
-
+    
     static int calculateScore(ArrayList<Question> questions, ArrayList<Attempt> attempts) {
-
         int correct = 0;
-
         for (int i = 0; i < questions.size(); i++) {
             if (attempts.get(i).answer.equalsIgnoreCase(questions.get(i).correct)) {
                 correct++;
             }
         }
-
         return correct;
     }
-
+    
     // ---------------- RESULT ----------------
-    static void showResult() {
-
+    static void showResult() throws InterruptedException {
+        ConsoleUtils.clearAndScroll();
+        ConsoleUtils.printHeader("QUIZ RESULT");
+        
         int correct = currentUser.score;
         int total = 3;
         int wrong = total - correct;
         double percent = (correct * 100.0) / total;
-
-        String GREEN = "\u001B[32m";
-        String RED = "\u001B[31m";
-        String YELLOW = "\u001B[33m";
-        String CYAN = "\u001B[36m";
-        String RESET = "\u001B[0m";
-
-        System.out.println(CYAN + "\n+--------------------------------------+");
-        System.out.println("|            QUIZ RESULT TABLE         |");
-        System.out.println("+--------------+-----------------------+");
-
-        System.out.printf("| %-12s | %-21s |\n", "Score", correct + "/" + total);
-        System.out.println("+--------------+-----------------------+");
-
-        System.out.printf("| %-12s | %-21s |\n", "Correct", GREEN + correct + RESET);
-        System.out.println(CYAN + "+--------------+-----------------------+");
-
-        System.out.printf("| %-12s | %-21s |\n", "Wrong", RED + wrong + RESET);
-        System.out.println(CYAN + "+--------------+-----------------------+");
-
-        System.out.printf("| %-12s | %-21s |\n", "Percentage", YELLOW + percent + "%" + RESET);
-        System.out.println(CYAN + "+--------------+-----------------------+" + RESET);
-
+        
+        String resultBox = 
+            "+--------------------------------------------------+\n" +
+            "|              QUIZ RESULT SUMMARY                 |\n" +
+            "+--------------------------------------------------+\n" +
+            String.format("|  Score       : %d / %d %28s\n", correct, total, "|") +
+            String.format("|  Correct     : %d %34s\n", correct, "|") +
+            String.format("|  Wrong       : %d %34s\n", wrong, "|") +
+            String.format("|  Percentage  : %.2f%% %30s\n", percent, "|") +
+            "+--------------------------------------------------+";
+        
+        ConsoleUtils.printInBox(resultBox, ConsoleUtils.CYAN);
+        
         if (percent >= 40) {
-            System.out.println(GREEN + "\nPASS - Congratulations " + currentUser.username + "!" + RESET);
+            ConsoleUtils.printInBox("[PASS] - Congratulations " + currentUser.username + "!", ConsoleUtils.GREEN);
         } else {
-            System.out.println(RED + "\nFAIL - Better Luck Next Time!" + RESET);
+            ConsoleUtils.printInBox("[FAIL] - Better Luck Next Time!", ConsoleUtils.RED);
         }
-         System.out.println("Press any key to continue...");
-        sc.nextLine();
-        sc.nextLine();
+        
+        ConsoleUtils.pressAnyKey(sc);
     }
-
-    static void evaluate(ArrayList<Question> questions, ArrayList<Attempt> attempts) {
-
+    
+    static void evaluate(ArrayList<Question> questions, ArrayList<Attempt> attempts) throws InterruptedException {
         int correct = 0, wrong = 0;
-
         for (int i = 0; i < questions.size(); i++) {
-            if (attempts.get(i).answer.equalsIgnoreCase(questions.get(i).correct)) {
-                correct++;
-            } else if (!attempts.get(i).answer.equals("")) {
-                wrong++;
-            }
+            if (attempts.get(i).answer.equalsIgnoreCase(questions.get(i).correct)) correct++;
+            else if (!attempts.get(i).answer.equals("")) wrong++;
         }
-
-        int total = questions.size();
-        double percent = (correct * 100.0) / total;
-
         currentUser.score = correct;
-
-        String GREEN = "\u001B[32m";
-        String RED = "\u001B[31m";
-        String YELLOW = "\u001B[33m";
-        String CYAN = "\u001B[36m";
-        String RESET = "\u001B[0m";
-
-        System.out.println(CYAN + "\n+--------------------------------------+");
-        System.out.println("|            QUIZ RESULT TABLE         |");
-        System.out.println("+--------------+-----------------------+");
-
-        System.out.printf("| %-12s | %-21s |\n", "Score", correct + "/" + total);
-        System.out.println("+--------------+-----------------------+");
-
-        System.out.printf("| %-12s | %-21s |\n", "Correct", GREEN + correct + RESET);
-        System.out.println(CYAN + "+--------------+-----------------------+");
-
-        System.out.printf("| %-12s | %-21s |\n", "Wrong", RED + wrong + RESET);
-        System.out.println(CYAN + "+--------------+-----------------------+");
-
-        System.out.printf("| %-12s | %-21s |\n", "Percentage", YELLOW + percent + "%" + RESET);
-        System.out.println(CYAN + "+--------------+-----------------------+" + RESET);
-
-        if (percent >= 40) {
-            System.out.println(GREEN + "\nPASS - Congratulations!" + RESET);
-        } else {
-            System.out.println(RED + "\nFAIL - Better Luck Next Time!" + RESET);
-        }
-        System.out.println("Press any key to continue...");
-        sc.nextLine();
-        sc.nextLine();
+        showResult();
     }
-
-    static void leaderboard() {
-
-        String CYAN = "\u001B[36m";
-        String GREEN = "\u001B[32m";
-        String RESET = "\u001B[0m";
-
-        System.out.println(CYAN + "\n+-------------------------------+");
-        System.out.println("|          LEADERBOARD          |");
-        System.out.println("+--------------+----------------+");
-        System.out.printf("| %-12s | %-14s |\n", "Username", "Score");
-        System.out.println("+--------------+----------------+");
-
+    
+    static void leaderboard() throws InterruptedException {
+        ConsoleUtils.clearAndScroll();
+        ConsoleUtils.printHeader("LEADERBOARD");
+        
+        users.sort((a, b) -> Integer.compare(b.score, a.score));
+        
+        System.out.println(ConsoleUtils.CYAN +
+            "+--------------------------------------------------+\n" +
+            "|  Rank  |  Username          |     Score          |\n" +
+            "+--------------------------------------------------+" + ConsoleUtils.RESET);
+        
+        int rank = 1;
         for (User u : users) {
-            System.out.printf("| %-12s | %-14s |\n", u.username, GREEN + u.score + RESET);
+            if (rank <= 10) {
+                System.out.printf(ConsoleUtils.YELLOW + "|  %-4d |  %-16s |      %-8d     |\n" + ConsoleUtils.RESET, rank, u.username, u.score);
+            }
+            rank++;
         }
-
-        System.out.println(CYAN + "+--------------+----------------+" + RESET);
-         System.out.println("Press any key to continue...");
-        sc.nextLine();
-        sc.nextLine();
+        
+        System.out.println(ConsoleUtils.CYAN + "+--------------------------------------------------+" + ConsoleUtils.RESET);
+        ConsoleUtils.pressAnyKey(sc);
     }
-
+    
     // ---------------- MENU ----------------
-    public static void menu() {
+    public static void menu() throws InterruptedException {
         while (true) {
-            // System.out.println("\n1.Take Quiz 2.Result 3.Leaderboard 4.Notes 5.Logout");
-            project.quizMenu();
+            ConsoleUtils.clearAndScroll();
+            ConsoleUtils.printHeader("MAIN MENU");
+            
+            String menuBox = 
+                "+--------------------------------------------------+\n" +
+                "|                                                  |\n" +
+                "|      1. [*] Take Quiz                           |\n" +
+                "|      2. [*] View Result                         |\n" +
+                "|      3. [*] Leaderboard                         |\n" +
+                "|      4. [*] Learning Resources                  |\n" +
+                "|      5. [*] Logout                              |\n" +
+                "|                                                  |\n" +
+                "+--------------------------------------------------+";
+            
+            ConsoleUtils.printInBox(menuBox, ConsoleUtils.CYAN);
+            System.out.print(ConsoleUtils.GREEN + "Enter your choice: " + ConsoleUtils.RESET);
             int ch = sc.nextInt();
-
-            if (ch == 1)
-                startQuiz();
-            else if (ch == 2)
-                showResult();
-            else if (ch == 3)
-                leaderboard();
-            else if (ch == 4)
-               hand.subjectMenu();
-            else
-                return;
+            
+            if (ch == 1) startQuiz();
+            else if (ch == 2) showResult();
+            else if (ch == 3) leaderboard();
+            else if (ch == 4) hand.subjectMenu();
+            else return;
         }
     }
-
-
-    static void mainMenu() {
+    
+    static void mainMenu() throws InterruptedException {
         while (true) {
-
+            ConsoleUtils.clearAndScroll();
+            ConsoleUtils.printHeader("LEARNING MANAGEMENT SYSTEM");
             project.learn();
-
+            
+            System.out.print(ConsoleUtils.GREEN + "Enter your choice: " + ConsoleUtils.RESET);
             int ch = sc.nextInt();
-
+            
             if (ch == 1) {
-                hand.subjectMenu(); // Open LMS
-            }
-
-            else if (ch == 2) {
-                menu(); // Direct Quiz
-            }
-
-            else if (ch == 3) {
+                hand.subjectMenu();
+            } else if (ch == 2) {
+                menu();
+            } else if (ch == 3) {
                 currentUser = null;
                 break;
-            }
-
-            else {
-                System.out.println("Invalid Choice!");
+            } else {
+                ConsoleUtils.printInBox("[X] Invalid Choice!", ConsoleUtils.RED);
+                Thread.sleep(1000);
             }
         }
     }
-
-    public static void mainexec() {
+    
+    public static void mainexec() throws InterruptedException {
         while (true) {
-            // System.out.println("\n1.Signup 2.Login 3.Exit");
+            ConsoleUtils.clearAndScroll();
+            ConsoleUtils.printHeader("WELCOME TO QUIZ SYSTEM");
             project.banner1();
+            
+            System.out.print(ConsoleUtils.GREEN + "Enter your choice: " + ConsoleUtils.RESET);
             int ch = sc.nextInt();
-
-            if (ch == 1)
-                signup();
-            else if (ch == 2 && login())
-                mainMenu();
-            else if (ch == 3)
-                break;
+            
+            if (ch == 1) signup();
+            else if (ch == 2 && login()) mainMenu();
+            else if (ch == 3) {
+                ConsoleUtils.printInBox("[+] Thank you for using Quiz System!", ConsoleUtils.GREEN);
+                System.exit(0);
+            }
         }
     }
-
+    
     // ---------------- MAIN ----------------
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws InterruptedException {
         mainexec();
     }
 }

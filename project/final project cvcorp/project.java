@@ -334,4 +334,75 @@ RESET
         RESET
     );
 }
+public static void QuizLoomAscii() {
+
+    // ANSI escape codes
+    final String RESET   = "\u001B[0m";
+
+    // Gradient colors
+    final String DARK_BLUE   = "\u001B[38;2;10;15;90m";
+    final String PURPLE      = "\u001B[38;2;140;50;255m";
+    final String BLUE        = "\u001B[38;2;50;110;255m";
+    final String CYAN        = "\u001B[38;2;0;200;255m";
+    final String PINK        = "\u001B[38;2;255;0;180m";
+    final String ORANGE      = "\u001B[38;2;255;165;0m";
+    final String WHITE       = "\u001B[38;2;255;255;255m";
+
+    String ascii =
+
+
+PURPLE +
+"                                                     :;+xxxxx+;.                                                         \n" +
+"                                                  +xxxxxxxxxxxxxxx:                                                      \n" +
+"                                                +xxxxxxxxxxxxxxxxxxx:                                                    \n" +
+"                                              .xxxxxxx+.     .+xxxxxx+   " + PINK + ".;xx;                                           \n" +
+
+PURPLE +
+"                                             .xxxxxx.           +xxxxxx  " + PINK + "xx;.                                            \n" +
+
+CYAN +
+"                                             xxxxxx    XXX$$X+   :xXXXX:                                                 \n" +
+"                                            :XXXXX.   X$X  +$$.   xXXXXX   " + CYAN + ".:::.                                         \n" +
+"                                            ;XXXXX.       ;X$X    ;XXXXX  " + CYAN + ".;;;;:                                         \n" +
+"                                            :XXXXX.      $$X:     XXXXXx                                                 \n" +
+
+BLUE +
+"                                             xXXXXX.     .;      ;XXXXX: .;:                                             \n" +
+"                                             .XXXXXX;    $$; ++xxxXXXXx  " + ORANGE + ".+++;                                           \n" +
+"                                               xXXXXXXx:....:xxxxxxxX+      ..                                           \n" +
+
+PURPLE +
+"                                                ;XXXXXXXXXX$$$Xxxxxxxx;                                                  \n" +
+"                                                  :XXXXXXXX$$$$$Xxxxxxxx                                                 \n" +
+"                                                      :xXXXXX+.   ;xxxxx                                                 \n" +
+
+WHITE +
+"                                                                    .:                                                   \n" +
+
+CYAN +
+"                         ;X&&&$x.            x&&          xx;                                                            \n" +
+"                       ;&&&;::$&&X            :.          xX;                                                            \n" +
+
+CYAN +
+"                      .&&+     .&&x &&:  +&$ ;&$ +&&&&&&: XX;      " + PURPLE + ".XXXXXx   :XXXXX+  xXxXXXxxxxxx.                      \n" +
+
+CYAN +
+"                      ;&&       X&$ &&:  +&$ ;&&    +&&:  XX;     " + PURPLE + ".XX:  ;XX.;XX.  +Xx xX+  xx+  +xx                      \n" +
+
+CYAN +
+"                       $&$. :&&X&&: &&:  +&$ ;&&  .$&X    XX;     " + PURPLE + ";XX   .XX:+Xx   .XX xX;  +x+  ;xx                      \n" +
+
+CYAN +
+"                       .X&&&$$&&&x  x&&$$&&$ ;&& X&&$XXX; XXXXXXXx " + BLUE + "xXXxxXX+ .XXxxxXX: xX;  +x+  ;xx                      \n" +
+
+CYAN +
+"                          .+Xx. X&&.  +x. :. .:. .::::::  ........   .+;.      :+;    ...  ...  ...                      \n" +
+
+
+
+RESET;
+
+    System.out.println(ascii);
 }
+}
+
