@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 public class q2 {
@@ -9,6 +10,13 @@ public class q2 {
             
             al.add(sc.nextInt());
         }
-        System.out.println(al);
+        ListIterator<Integer> li=  al.listIterator();
+        while (li.hasNext()) {
+            System.out.print(li.next()+" ");
+        }
+        System.out.println();
+        while (li.hasPrevious()) {
+            System.out.print(li.previous()+" ");
+        }
     }
 }
