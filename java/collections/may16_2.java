@@ -11,7 +11,7 @@ public class may16_2 {
         int k=3;
         for (int i = 0; k>0; i++) {
             if(!al1.contains(al.get(i))){
-                al1.add(al.get(i));
+                al1.add(al.get(i)); 
                 k--;
             }
         }
