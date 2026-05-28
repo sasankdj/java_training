@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix </title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="flex flex-col justify-between min-h-screen bg-black text-white font-sans">
+    
+    
+    <div class="flex justify-between items-center w-full max-w-6xl p-4">
+       
+        <img class="h-8 sm:h-10 object-contain" src="https://wikimedia.org" alt="Netflix Logo">
+        
+      
+        <div class="flex items-center gap-3">
+        
+            <div class="relative">
+                <select class="bg-black border border-gray-600 text-sm  px-4 py-1.5">
+                    <option >English</option>
+                    <option >Hindi</option>
+                </select>
+               
+             
+            </div>
+           
+            <button class="bg-red  text-white ">
+                Sign In
+            </button>
+        </div>
+    </div>
+
+   
+    <div class="flex flex-col items-center justify-center text-center ">
+        <h1 class="text-3xl sm:text-5xl font-black tracking-tight mb-4 leading-tight">
+            Unlimited movies, TV shows, and more
+        </h1>
+        <p class="text-lg  font-medium mb-6">
+            Starts at ₹149. Cancel at any time.
+        </p>
+        <p class="text-basemb-4 text-gray-200">
+            Ready to watch? Enter your email to create or restart your membership.
+        </p>
+        
+  
+        <div class="flex flex-col sm:flex-row gap-2 w-full max-w-md items-stretch mt-2">
+            <input 
+                type="email" 
+                placeholder="Email address" 
+                class="flex-grow bg-black/40 border border-gray-500 rounded p-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-base"
+            >
+            <button class="bg-[#E50914] text-white text-lg font-bold px-6 py-4 rounded  flex items-center justify-center ">
+                Get Started
+               
+            </button>
+        </div>
+    </div>
+    
+    
+    <div></div>
+
+</body>
+</html>

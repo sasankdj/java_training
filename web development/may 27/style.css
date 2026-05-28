@@ -1,0 +1,67 @@
+header{
+    margin: 20px 20px;
+    font-size: 20px;
+    font-weight: bold   ;
+}
+.navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar div{
+    display: flex;
+    gap: 5px;
+    }
+.navbar a{
+    padding: 10px 20px;
+    text-decoration: none;
+    border: 2px solid black;
+    border-radius: 25px;
+    color: black;
+    
+}
+.navbar a:hover{
+    color: white;
+    background-color: black;
+    transition: 0.3s;
+}
+
+.hero{
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8dbf_Cn6hk80V7ofiBEtgaPXPemrR3ANeaQ&s");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hero span{
+    color: white;
+    background-color: black;
+}
+.projects{
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+}
+.projects img{
+    width: 100%;
+}
+.card-container{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+
+}
+
+.card img{
+    width: 100%;
+
+}
+.card-trans{
+    font-weight: 100;
+    
+}

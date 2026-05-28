@@ -1,0 +1,19 @@
+h1{
+    color: blue;
+    font-family: algerian;
+    font-weight: lighter;
+    /* font-style: inherit; */
+    font-size: 50px;
+    text-align: center;
+}
+.par{
+    text-align: center;
+    border: solid;
+    border-radius: 3px;
+    border-style: dashed;
+    border-color: cadetblue;
+    padding: 10px 20px 10px 30px;
+    background-color: beige;
+    text-align: justify;
+    color: rgb(71, 21, 33);
+}

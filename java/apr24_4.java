@@ -35,7 +35,7 @@ public class apr24_4 extends Thread{
             t2.join();
             t3.start();
         } catch (Exception e) {
-            // TODO: handle exception
+           
         }
     }
 }

@@ -1,0 +1,31 @@
+body{
+    background-image: url("https://www.w3schools.com/w3images/forestbridge.jpg");
+   background-size: cover;
+
+}
+hr{
+    width: 200px;
+    height: 2px;
+    background-color: white;
+}
+#top{
+    color: white;
+    font-size: 20px;
+
+}
+#bottom{
+    color: white;
+margin-top: 210px;
+    
+}
+#center{
+    color: white;
+    text-align: center;
+    
+}
+h1{
+    text-align: center;
+    color: white;
+    margin-top: 200px;
+
+}
