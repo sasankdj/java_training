@@ -11,8 +11,8 @@ public class may4_1 {
         // System.out.println(pq.peek());      //doesnt raise exception
         System.out.println(pq.element());       //raises exception when there were no elements
         while (!pq.isEmpty()) {
-            // System.out.print(pq.poll());     //doesnt raise exception
-            System.out.print(pq.remove());    //raises exception when there were no elements
+            System.out.print(pq.poll());     //doesnt raise exception
+            // System.out.print(pq.remove());    //raises exception when there were no elements
         }
 
 
