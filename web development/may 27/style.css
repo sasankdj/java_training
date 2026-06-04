@@ -1,23 +1,39 @@
 header{
-    margin: 20px 20px;
+    margin: 20px 0px;
     font-size: 20px;
     font-weight: bold   ;
 }
+section{
+    padding: 10px 10px;
+}
 .navbar{
+    margin: 0px 10px;
+    /* background-color: rgb(37, 33, 33); */
+    background-image: url("https://images.jdmagicbox.com/quickquotes/images_main/-1rrecp7s.jpg");
+    color: white;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    position: sticky;
+    z-index: 100;
+    top: 0;
+    h1{
+        padding: 0px 40px;
+    }
 }
 .navbar div{
     display: flex;
     gap: 5px;
+    padding-right: 30px;
+   
     }
 .navbar a{
     padding: 10px 20px;
     text-decoration: none;
-    border: 2px solid black;
+    border: 2px solid rgb(74, 74, 68);
     border-radius: 25px;
+     background-color: white;
     color: black;
     
 }
@@ -28,6 +44,7 @@ header{
 }
 
 .hero{
+    margin: 20px 10px;
     background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8dbf_Cn6hk80V7ofiBEtgaPXPemrR3ANeaQ&s");
     background-repeat: no-repeat;
     background-size: cover;
@@ -64,4 +81,43 @@ header{
 .card-trans{
     font-weight: 100;
     
+}
+
+.contact{
+    display: grid;
+    gap: 10px;
+    input{
+        padding: 10px;
+    }
+    input[type="submit"]{
+        color: white;
+        background-color: black;
+        width: fit-content;
+        border-radius: 10px;
+        
+    }
+    input[type="submit"]:hover{
+        background-color: white;
+        color: black;
+        transition: 0.2s;
+    }
+}
+
+.image{
+    img{
+
+        width: 100%;
+    }
+}
+
+footer{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    background-color: black;
+    color: white;
+    text-align: center;
+    height: fit-content;
+
+    margin: 0px 10px;
 }

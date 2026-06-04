@@ -12,9 +12,10 @@ public class june2_1 {
         // for (int i = 0; i <st.size(); i++) {
         //     System.out.print(st.peek()+" ");
         // }
-        while (!st.empty()) {
-            System.out.print(st.pop()+" ");
-        }
+        // while (!st.empty()) {
+        //     System.out.print(st.pop()+" ");
+        // }
+        System.out.println(st.search(9));
         
     }
     
